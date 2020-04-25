@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -20,6 +21,7 @@ namespace TeachingCompanion.WebAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize("read:sessions")]
         public async Task<Models.Session> GetAsync(Guid id)
         {
             await DoNothing(); //- Shushing warnings
@@ -31,6 +33,7 @@ namespace TeachingCompanion.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize("write:sessions")]
         public async Task PostAsync([FromBody] Models.Session session)
         {
             await DoNothing(); //- Shushing warnings
