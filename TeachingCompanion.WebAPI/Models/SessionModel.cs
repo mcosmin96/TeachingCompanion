@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeachingCompanion.WebAPI.Models
 {
-    public class Session
+    public class SessionModel
     {
         [JsonProperty("id")]
         public Guid Id { get; set; }

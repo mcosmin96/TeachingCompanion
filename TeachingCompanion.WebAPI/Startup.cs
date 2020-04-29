@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using TeachingCompanion.WebAPI.Authorization;
+using TeachingCompanion.WebAPI.Hubs;
 
 namespace TeachingCompanion.WebAPI
 {
@@ -32,6 +33,17 @@ namespace TeachingCompanion.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                    .WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
+            services.AddSignalR();
+
             services.AddControllers();
 
             services.AddAuthentication(options =>
@@ -67,6 +79,8 @@ namespace TeachingCompanion.WebAPI
 
             app.UseRouting();
 
+            app.UseCors("CorsPolicy");
+
             app.UseAuthentication();
 
             app.UseAuthorization();
@@ -74,6 +88,7 @@ namespace TeachingCompanion.WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChartHub>("/hub/chart");
             });
         }
     }

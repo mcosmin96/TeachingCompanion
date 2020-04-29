@@ -22,11 +22,11 @@ namespace TeachingCompanion.WebAPI.Controllers
         [HttpGet]
         [Route("{id}")]
         [Authorize("read:sessions")]
-        public async Task<Models.Session> GetAsync(Guid id)
+        public async Task<Models.SessionModel> GetAsync(Guid id)
         {
             await DoNothing(); //- Shushing warnings
 
-            return new Models.Session()
+            return new Models.SessionModel()
             {
                 Id = id
             };
@@ -34,7 +34,7 @@ namespace TeachingCompanion.WebAPI.Controllers
 
         [HttpPost]
         [Authorize("write:sessions")]
-        public async Task PostAsync([FromBody] Models.Session session)
+        public async Task PostAsync([FromBody] Models.SessionModel session)
         {
             await DoNothing(); //- Shushing warnings
         }
