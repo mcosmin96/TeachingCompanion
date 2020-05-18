@@ -3,16 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TeachingCompanion.WebAPI.Models;
 
 namespace TeachingCompanion.WebAPI.Hubs
 {
-    public class ChartHub : Hub
+    public class QuestionHub : Hub
     {
-        public async Task BroadcastChartData(List<ChartModel> data) =>
-            await Clients.All.SendAsync("BroadcastChartData", data);
-
-        public async Task SendQuestion(string name, string question)
+        public async Task SendMessage(string name, string question)
         {
             await Clients.All.SendAsync("ReceiveQuestion", name, question);
         }

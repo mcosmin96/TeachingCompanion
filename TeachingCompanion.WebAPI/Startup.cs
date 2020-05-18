@@ -89,6 +89,7 @@ namespace TeachingCompanion.WebAPI
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ChartHub>("/hub/chart");
+                endpoints.MapHub<QuestionHub>("/hub/question");
             });
         }
     }
