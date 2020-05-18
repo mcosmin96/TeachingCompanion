@@ -26,5 +26,22 @@ namespace UnitTests
 
             Assert.IsTrue(logs.Any(a => a.Date.Date.Equals(log.Date.Date)));
         }
+
+        [TestMethod]
+        public void TestSQLInjectionVulnerability()
+        {
+            var log = new Log()
+            {
+                UserId = "injection) -- ",
+                Date = DateTime.UtcNow,
+                Info = "This is a test log."
+            };
+
+            SQLHelper.SaveLog(log);
+
+            var logs = SQLHelper.GetLogs();
+
+            Assert.IsTrue(logs.Any(a => a.UserId.Equals(log.UserId)));
+        }
     }
 }
